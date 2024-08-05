@@ -1,6 +1,3 @@
-Here's a polished README file for your GitHub project:
-
----
 
 # Accident Detection System
 
