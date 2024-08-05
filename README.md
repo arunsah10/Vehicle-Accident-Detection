@@ -71,8 +71,5 @@ Arun Kumar Sah
 
 ## GitHub Repository
 
-For more information and to access the source code, visit our GitHub repository: [GitHub Repository](https://github.com/arunsah10)
+For more information and to access the source code, visit our GitHub repository: [GitHub Repository](https://github.com/arunsah10/Vehicle-Accident-Detection)
 
----
-
-Feel free to adjust any details or add more specific instructions as needed!
