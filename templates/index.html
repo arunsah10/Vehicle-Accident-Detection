@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Accident Detection System using Yolov8</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(to bottom right, #1e1e1e, #4e4e4e); /* Gradient background */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      color: #fff; /* Text color for better readability */
+    }
+
+    /* Container Styles */
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      color: #333; /* Dark color for text inside container */
+    }
+
+    /* Header Styles */
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-style: italic;
+      color: #333; /* Dark color for header text */
+    }
+
+    /* Button Styles */
+    .button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    .info {
+      background-color: #03A9F4; /* Info button color */
+      color: white;
+    }
+
+    .success {
+      background-color: #2ecc71; /* Success button color */
+      color: white;
+    }
+
+    /* Button Container Styles */
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Center buttons */
+    }
+
+    .button-container div {
+      margin: 10px;
+      text-align: center;
+      flex: 1;
+      min-width: 200px; /* Ensure buttons have a minimum width */
+    }
+
+    .or {
+      margin: 10px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* Video Styles */
+    .video-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .video {
+      width: 100%;
+      height: auto;
+      max-width: 700px;
+      border: 2px solid rgb(0, 0, 0);
+    }
+
+    /* Message Styles */
+    .message {
+      text-align: center;
+      color: #f65c5c; /* Error message color */
+      font-size: 18px;
+      display: block; /* Force display */
+      margin-top: 20px;
+    }
+
+    /* About Section Styles */
+    .about {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      color: #333; /* Dark color for text inside about section */
+    }
+
+    .about h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .about p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .button-container {
+        flex-direction: column;
+      }
+
+      .video {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Vehicle Accident Detection System</h1>
+    </div>
+    <div class="button-container">
+      <div>
+        <form method="POST" enctype="multipart/form-data">
+          <label for="file-upload" class="button info">Select a file</label>
+          <input id="file-upload" type="file" name="file" onchange="document.getElementById('selected-file-name').innerHTML = this.files[0].name;" style="display: none;">
+          <div id="selected-file-name"></div>
+          <button type="submit" class="button success">Upload</button>
+        </form>
+      </div>
+      <div class="or">OR</div>
+      <div>
+        <form method="POST">
+          <input type="hidden" name="camera" value="true">
+          <button type="submit" class="button info">Capture from Camera</button>
+        </form>
+        <button id="stop-button" class="button success">Stop</button>
+      </div>
+    </div>
+    <!-- Ensure file_path is set correctly or test with empty file_path to show message -->
+    <div class="video-container">
+      <img src="/video_feed?file={{ file_path }}" class="video" id="video" style="display: block;"> <!-- Ensure display is set to block -->
+    </div>
+    <div id="message" class="message">Please upload a video file or capture from camera to run.</div>
+  </div>
+
+  <div class="about">
+    <h2>About This System</h2>
+    <p>
+      The Accident Detection System is a sophisticated application designed to enhance safety by detecting accidents in real-time using advanced computer vision techniques. Leveraging YOLOv8, a state-of-the-art object detection model, this system processes videos to identify accidents involving vehicles.
+    </p>
+    <p><strong>Key Features:</strong></p>
+    <ul>
+      <li><strong>Video to Image Conversion:</strong> The system begins by converting video feeds into individual images. This step is crucial for analyzing each frame separately to detect any anomalies or accidents.</li>
+      <li><strong>Training with YOLOv8:</strong> The extracted images are used to train YOLOv8, a robust object detection model known for its accuracy and speed. YOLOv8 is fine-tuned with a custom vehicle dataset to improve its detection capabilities specifically for vehicle accidents.</li>
+      <li><strong>Custom Video Analysis:</strong> Users can upload their own videos to be analyzed by the trained YOLOv8 model. The system processes these videos to detect and highlight any accident events.</li>
+      <li><strong>Surveillance Camera Integration:</strong> The system can also interface with surveillance cameras to provide real-time accident detection. This feature is particularly useful for monitoring traffic or high-risk areas continuously.</li>
+    </ul>
+    <p><strong>Applications:</strong></p>
+    <ul>
+      <li><strong>Traffic Management:</strong> By integrating this system with traffic management solutions, authorities can quickly respond to accidents and manage traffic flow more effectively.</li>
+      <li><strong>Safety Monitoring:</strong> The system enhances safety in high-risk areas by providing real-time alerts and analysis, potentially preventing further accidents and ensuring faster emergency responses.</li>
+      <li><strong>Data Collection:</strong> Accumulated data from accident detections can be used for further analysis to understand accident patterns and improve overall road safety measures.</li>
+    </ul>
+    <p>
+      For more information and to access the source code, visit our GitHub repository: <a href="https://github.com/arunsah10" target="_blank">GitHub Repository</a>.
+    </p>
+    <p><strong>Author:</strong> Arun Kumar Sah</p>
+    <p>&copy; 2024 Arun Kumar Sah. All rights reserved.</p>
+  </div>
+  
+  
+
+  <script>
+    document.getElementById("stop-button").addEventListener("click", function() {
+      var video = document.getElementById("video");
+      var message = document.getElementById("message");
+
+      console.log("Stop button clicked"); // Debugging line
+
+      if (video) {
+        video.style.display = "none"; // Hide the video
+        console.log("Video hidden"); // Debugging line
+      }
+      
+      message.style.display = "block"; // Show the message
+      console.log("Message displayed"); // Debugging line
+    });
+
+    // For debugging: Check if message is correctly set on page load
+    window.onload = function() {
+      var video = document.getElementById("video");
+      var message = document.getElementById("message");
+      console.log("Page loaded");
+
+      if (video) {
+        console.log("Video element found");
+        video.style.display = "block"; // Ensure video is displayed
+      }
+
+      if (message) {
+        console.log("Message element found");
+        message.style.display = "block";
+      }
+    };
+  </script>
+</body>
+</html>

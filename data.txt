@@ -1,0 +1,6 @@
+train: ../Vehicle Dataset/images/training
+val: ../Vehicle Dataset/labels/validation
+#number of classes
+nc: 1
+#class names
+
